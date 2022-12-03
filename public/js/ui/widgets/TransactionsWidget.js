@@ -4,36 +4,36 @@
  * создания нового дохода или расхода
  * */
 
-class TransactionsWidget {
-  /**
-   * Устанавливает полученный элемент
-   * в свойство element.
-   * Если переданный элемент не существует,
-   * необходимо выкинуть ошибку.
-   * */
-  constructor( element ) {
-    this.element = element;
-    this.registerEvents();
+ class TransactionsWidget {
+	/**
+	 * Устанавливает полученный элемент
+	 * в свойство element.
+	 * Если переданный элемент не существует,
+	 * необходимо выкинуть ошибку.
+	 * */
+	constructor(element) {
+		if (!element) {
+			throw new Error('element is null!');
+		}
+		this.element = element;
+		this.registerEvents();
+	}
 
-  }
-  /**
-   * Регистрирует обработчики нажатия на
-   * кнопки «Новый доход» и «Новый расход».
-   * При нажатии вызывает Modal.open() для
-   * экземпляра окна
-   * */
-  registerEvents() {
-    const incomeButton = this.element.querySelector('.create-income-button'); //доход
-    const expenseButton = this.element.querySelector('.create-expense-button'); // расход
-
-      this.element.addEventListener('click', (e) => {
-          e.preventDefault();
-          if (e.target === incomeButton) {
-              App.getModal('newIncome').open();
-          } else if (e.target === expenseButton) {
-              App.getModal('newExpense').open();
-          }
-      });
-
-  }
+	/**
+	 * Регистрирует обработчики нажатия на
+	 * кнопки «Новый доход» и «Новый расход».
+	 * При нажатии вызывает Modal.open() для
+	 * экземпляра окна
+	 * */
+	registerEvents() {
+		this.element.onclick = (event) => {
+			event.preventDefault();
+			if (event.target === this.element.querySelector(".create-income-button")) {
+				App.getModal('newIncome').open();
+			}
+			else if (event.target === this.element.querySelector(".create-expense-button")) {
+				App.getModal('newExpense').open();
+			}
+		}
+	}
 }
